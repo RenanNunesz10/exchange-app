@@ -1,0 +1,330 @@
+{
+  "info": {
+    "_postman_id": "9f8c4e72-3a19-4b88-91d2-77b5100c9f01",
+    "name": "Currency Exchange App - Frankfurter API v2",
+    "description": "Collection de investigação e validação dos endpoints da API Frankfurter v2 para o projeto Currency Exchange App (React SPA).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.frankfurter.dev/v2",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01. Moedas Disponíveis (GET /currencies)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna um array não vazio de moedas com iso_code e name', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+              "    pm.expect(jsonData[0]).to.have.property('iso_code');",
+              "    pm.expect(jsonData[0]).to.have.property('name');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/currencies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "currencies"
+          ]
+        },
+        "description": "Lista todas as moedas disponíveis na API Frankfurter v2."
+      },
+      "response": []
+    },
+    {
+      "name": "02. Cotação Atual EUR -> USD (GET /rate/EUR/USD)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna date, base, quote e rate numérico positivo', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.base).to.eql('EUR');",
+              "    pm.expect(jsonData.quote).to.eql('USD');",
+              "    pm.expect(jsonData.rate).to.be.a('number').and.to.be.above(0);",
+              "    pm.expect(jsonData.date).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rate/EUR/USD",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "rate",
+            "EUR",
+            "USD"
+          ]
+        },
+        "description": "Consulta a taxa de câmbio mais recente do par EUR para USD."
+      },
+      "response": []
+    },
+    {
+      "name": "03. Cotação Atual USD -> BRL (GET /rate/USD/BRL)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna cotação válida para USD -> BRL', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.base).to.eql('USD');",
+              "    pm.expect(jsonData.quote).to.eql('BRL');",
+              "    pm.expect(jsonData.rate).to.be.a('number').and.to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rate/USD/BRL",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "rate",
+            "USD",
+            "BRL"
+          ]
+        },
+        "description": "Consulta a taxa de câmbio mais recente do par USD para BRL."
+      },
+      "response": []
+    },
+    {
+      "name": "04. Histórico por Intervalo (Maio/2024 EUR -> USD)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna série histórica em formato de array', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array').that.is.not.empty;",
+              "    pm.expect(jsonData[0]).to.include.all.keys('date', 'base', 'quote', 'rate');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rates?from=2024-05-01&to=2024-05-31&base=EUR&quotes=USD",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "rates"
+          ],
+          "query": [
+            {
+              "key": "from",
+              "value": "2024-05-01"
+            },
+            {
+              "key": "to",
+              "value": "2024-05-31"
+            },
+            {
+              "key": "base",
+              "value": "EUR"
+            },
+            {
+              "key": "quotes",
+              "value": "USD"
+            }
+          ]
+        },
+        "description": "Consulta o histórico de taxas entre 01/05/2024 e 31/05/2024 para EUR -> USD."
+      },
+      "response": []
+    },
+    {
+      "name": "05. Histórico Longo 10 Anos (USD -> BRL)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Retorna mais de 3000 registros para janela de 10 anos', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.be.above(3000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rates?from=2016-10-20&to=2026-10-20&base=USD&quotes=BRL",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "rates"
+          ],
+          "query": [
+            {
+              "key": "from",
+              "value": "2016-10-20"
+            },
+            {
+              "key": "to",
+              "value": "2026-10-20"
+            },
+            {
+              "key": "base",
+              "value": "USD"
+            },
+            {
+              "key": "quotes",
+              "value": "BRL"
+            }
+          ]
+        },
+        "description": "Valida o comportamento da API para o maior período exigido no escopo (10 anos)."
+      },
+      "response": []
+    },
+    {
+      "name": "06. Caso de Erro - Moeda Inválida (GET /rate/EUR/INVALID)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 422 Unprocessable Entity', function () {",
+              "    pm.response.to.have.status(422);",
+              "});",
+              "pm.test('Retorna mensagem de erro informando moeda inválida', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('message');",
+              "    pm.expect(jsonData.message).to.include('invalid currency');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rate/EUR/INVALID",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "rate",
+            "EUR",
+            "INVALID"
+          ]
+        },
+        "description": "Verifica a estrutura de erro HTTP 422 quando uma moeda inexistente é consultada."
+      },
+      "response": []
+    },
+    {
+      "name": "07. Caso de Borda - Intervalo de Datas Invertido (from > to)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status HTTP é 200 OK com lista vazia', function () {",
+              "    pm.response.to.have.status(200);",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array').that.is.empty;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rates?from=2025-05-10&to=2025-05-01&base=EUR&quotes=USD",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "rates"
+          ],
+          "query": [
+            {
+              "key": "from",
+              "value": "2025-05-10"
+            },
+            {
+              "key": "to",
+              "value": "2025-05-01"
+            },
+            {
+              "key": "base",
+              "value": "EUR"
+            },
+            {
+              "key": "quotes",
+              "value": "USD"
+            }
+          ]
+        },
+        "description": "Verifica que intervalos com data inicial maior que a final retornam array vazio []."
+      },
+      "response": []
+    }
+  ]
+}
