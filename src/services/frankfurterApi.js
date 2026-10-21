@@ -1,5 +1,5 @@
-import { CURRENCY_NAMES_PT } from '../constants/periods';
-import { formatDateToISO } from '../utils/dateUtils';
+import { CURRENCY_NAMES_PT } from '../constants/periods.js';
+import { formatDateToISO } from '../utils/dateUtils.js';
 
 const API_BASE_URL = 'https://api.frankfurter.dev/v2';
 

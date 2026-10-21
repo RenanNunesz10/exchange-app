@@ -1,4 +1,4 @@
-import { formatDateToISO } from './dateUtils';
+import { formatDateToISO } from './dateUtils.js';
 
 /**
  * Gera o conteúdo textual em formato CSV (com cabeçalhos) a partir dos registros filtrados.

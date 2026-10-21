@@ -1,4 +1,4 @@
-import { HISTORICAL_PERIODS, DEFAULT_PERIOD } from '../constants/periods';
+import { HISTORICAL_PERIODS, DEFAULT_PERIOD } from '../constants/periods.js';
 
 /**
  * Converte um objeto Date para string no formato ISO de data (YYYY-MM-DD).

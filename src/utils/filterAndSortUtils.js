@@ -1,4 +1,4 @@
-import { parseNumericInput } from './currencyUtils';
+import { parseNumericInput } from './currencyUtils.js';
 
 export const INITIAL_TABLE_FILTERS = {
   startDate: '',
