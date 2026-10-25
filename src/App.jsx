@@ -15,8 +15,6 @@ import { PeriodSelector } from './components/PeriodSelector/PeriodSelector.jsx';
 import { StatsSummary } from './components/StatsSummary/StatsSummary.jsx';
 import { HistoryChart } from './components/HistoryChart/HistoryChart.jsx';
 import { RatesTable } from './components/RatesTable/RatesTable.jsx';
-import { Footer } from './components/Footer/Footer.jsx';
-import { formatIsoDateToBR } from './utils/dateUtils.js';
 import styles from './App.module.css';
 
 export function App() {
@@ -61,9 +59,7 @@ export function App() {
   return (
     <div className={styles.appLayout}>
       {/* Cabeçalho */}
-      <Header
-        lastUpdated={rateData?.date ? formatIsoDateToBR(rateData.date) : undefined}
-      />
+      <Header />
 
       <main className={styles.mainContent}>
         {/* Conversor de Moedas */}
@@ -123,9 +119,6 @@ export function App() {
           onRetry={refetchHistory}
         />
       </main>
-
-      {/* Rodapé */}
-      <Footer />
     </div>
   );
 }

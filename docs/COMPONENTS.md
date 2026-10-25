@@ -22,7 +22,6 @@ flowchart TD
     RatesTable["RatesTable.jsx (Tabela, Ordenação, Contador e Exportação CSV)"]
     TableFilters["TableFilters.jsx (Filtros de datas e faixa de cotação)"]
     FeedbackState["FeedbackState.jsx (Loading, Error e Empty State reutilizável)"]
-    Footer["Footer.jsx (Rodapé e créditos da API Frankfurter)"]
 
     App --> Header
     App --> Converter
@@ -30,7 +29,6 @@ flowchart TD
     App --> StatsSummary
     App --> HistoryChart
     App --> RatesTable
-    App --> Footer
 
     RatesTable --> TableFilters
     Converter -.-> FeedbackState
@@ -45,7 +43,7 @@ flowchart TD
 | Componente | Responsabilidade | Arquivo JSX | Arquivo CSS Module | Principais Props | Estados Internos (`useState`) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **`App`** | Orquestrar o estado compartilhado (moeda origem, moeda destino e período), consumir os Custom Hooks da API e distribuir dados e callbacks para os componentes filhos. | `src/App.jsx` | `src/App.module.css` | *(Componente raiz — não recebe props)* | `baseCurrency` (`'USD'`), `targetCurrency` (`'BRL'`), `amount` (`'100'`), `selectedPeriod` (`'30d'`) |
-| **`Header`** | Exibir a identidade visual da aplicação, subtítulo descritivo e selo informativo da fonte de dados (API Frankfurter / BCE). | `src/components/Header/Header.jsx` | `src/components/Header/Header.module.css` | `lastUpdated` (string opcional) | *(Sem estado interno — Stateless)* |
+| **`Header`** | Exibir a identidade visual da aplicação e subtítulo descritivo. | `src/components/Header/Header.jsx` | `src/components/Header/Header.module.css` | *(Sem props obrigatórias)* | *(Sem estado interno — Stateless)* |
 | **`CurrencyConverter`** | Permitir selecionar as moedas de origem/destino, digitar o valor a converter, inverter o par de moedas, validar entradas inválidas e exibir o valor convertido, a taxa unitária e a data efetiva da cotação. | `src/components/CurrencyConverter/CurrencyConverter.jsx` | `src/components/CurrencyConverter/CurrencyConverter.module.css` | `currencies`, `baseCurrency`, `targetCurrency`, `amount`, `rateData`, `loading`, `error`, `onBaseChange`, `onTargetChange`, `onAmountChange`, `onSwapCurrencies`, `onRetry` | *(Controlado via props pelo `App` para sincronizar o par de moedas com o restante do dashboard)* |
 | **`PeriodSelector`** | Renderizar a barra de botões dos 8 períodos históricos obrigatórios (`7d`, `15d`, `30d`, `3m`, `6m`, `1y`, `5y`, `10y`) e destacar o período ativo. | `src/components/PeriodSelector/PeriodSelector.jsx` | `src/components/PeriodSelector/PeriodSelector.module.css` | `periods`, `selectedPeriod`, `onSelectPeriod`, `disabled` | *(Sem estado interno — Stateless)* |
 | **`StatsSummary`** | Apresentar cards analíticos resumindo o comportamento do par no período selecionado: Cotação Atual, Mínima, Máxima, Média e Variação Percentual (%). | `src/components/StatsSummary/StatsSummary.jsx` | `src/components/StatsSummary/StatsSummary.module.css` | `records`, `baseCurrency`, `targetCurrency`, `loading` | *(Sem estado interno — valores derivados dos registros)* |
@@ -53,7 +51,6 @@ flowchart TD
 | **`TableFilters`** | Disponibilizar os controles de filtro da tabela: data inicial, data final, cotação mínima, cotação máxima e botão de limpar filtros, além de avisos de validação de intervalos. | `src/components/TableFilters/TableFilters.jsx` | `src/components/TableFilters/TableFilters.module.css` | `filters`, `minAvailableDate`, `maxAvailableDate`, `validationError`, `hasActiveFilters`, `onFilterChange`, `onClearFilters` | *(Controlado por `RatesTable`)* |
 | **`RatesTable`** | Exibir a tabela histórica (Data, Moeda de Origem, Moeda de Destino, Cotação), coordenar os filtros (`TableFilters`), aplicar ordenação (Data/Cotação), exibir o contador de registros encontrados e acionar a exportação CSV. | `src/components/RatesTable/RatesTable.jsx` | `src/components/RatesTable/RatesTable.module.css` | `records`, `baseCurrency`, `targetCurrency`, `selectedPeriod`, `loading`, `error`, `onRetry` | `filters` (`{ startDate, endDate, minRate, maxRate }`), `sortConfig` (`{ field: 'date', direction: 'desc' }`) |
 | **`FeedbackState`** | Componente utilitário para padronizar a exibição visual dos estados de **Loading** (spinner/skeleton), **Erro** (com botão de tentar novamente) e **Empty State** (ausência de registros). | `src/components/FeedbackState/FeedbackState.jsx` | `src/components/FeedbackState/FeedbackState.module.css` | `type` (`'loading' \| 'error' \| 'empty'`), `title`, `message`, `onAction`, `actionLabel` | *(Sem estado interno — Stateless)* |
-| **`Footer`** | Exibir informações do projeto acadêmico, links úteis e referência à API Frankfurter. | `src/components/Footer/Footer.jsx` | `src/components/Footer/Footer.module.css` | *(Sem props obrigatórias)* | *(Sem estado interno — Stateless)* |
 
 ---
 

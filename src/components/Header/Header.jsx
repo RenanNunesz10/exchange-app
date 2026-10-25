@@ -1,13 +1,11 @@
 import React from 'react';
-import { ArrowLeftRight, Activity } from 'lucide-react';
+import { ArrowLeftRight } from 'lucide-react';
 import styles from './Header.module.css';
 
 /**
  * Cabeçalho institucional do Currency Exchange App.
- *
- * @param {{ lastUpdated?: string }} props
  */
-export function Header({ lastUpdated }) {
+export function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -21,18 +19,6 @@ export function Header({ lastUpdated }) {
               Conversão e análise histórica com dados oficiais do Banco Central Europeu
             </p>
           </div>
-        </div>
-
-        <div className={styles.badgeContainer}>
-          <div className={styles.apiBadge}>
-            <Activity size={14} className={styles.pulseIcon} />
-            <span>API Frankfurter v2</span>
-          </div>
-          {lastUpdated && (
-            <span className={styles.lastUpdated}>
-              Cotação de referência: <strong>{lastUpdated}</strong>
-            </span>
-          )}
         </div>
       </div>
     </header>

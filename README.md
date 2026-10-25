@@ -81,8 +81,7 @@ exchange-app/
 │   ├── components/             # Componentes funcionais organizados com CSS Modules
 │   │   ├── CurrencyConverter/  # Formulário de conversão, inversão e validação
 │   │   ├── FeedbackState/      # Componente reutilizável de Loading, Erro e Vazio
-│   │   ├── Footer/             # Rodapé institucional e créditos
-│   │   ├── Header/             # Cabeçalho da aplicação e status da API
+│   │   ├── Header/             # Cabeçalho da aplicação e identidade visual
 │   │   ├── HistoryChart/       # Gráfico responsivo com Recharts
 │   │   ├── PeriodSelector/     # Barra de seleção dos 8 períodos
 │   │   ├── RatesTable/         # Tabela de cotações, paginação e exportação CSV
